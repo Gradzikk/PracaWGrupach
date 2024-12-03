@@ -1,0 +1,175 @@
+MainPage.xaml
+using Microsoft.Maui.Controls;
+
+namespace pracawgrupach
+{
+    public partial class Relax : ContentPage
+    {
+        public Relax()
+        {
+            InitializeComponent();
+        }
+
+        private async void StartBreathingExerciseButton_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Ćwiczenie oddechowe", "Wdychaj głęboko przez nos, a wydychaj przez usta", "OK");
+        }
+
+        private async void StartMindfulnessButton_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Techniki mindfulness", "Skoncentruj się na teraźniejszości i puść myśli", "OK");
+        }
+    }
+}
+MainPage.xaml.cs
+
+using Microsoft.Maui.Controls;
+
+namespace pracawgrupach
+{
+    public partial class MainPage : ContentPage
+    {
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+
+        private async void RelaxationButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Relax());
+        }
+
+        private async void PersonalGrowthButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Porady());
+        }
+    }
+}
+
+Porady.xaml
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="pracawgrupach.Porady">
+    <ScrollView>
+        <StackLayout>
+            <Label Text="Rozwój osobisty" />
+            <Picker x:Name="statePicker" Title="Wybierz swój stan" SelectedIndexChanged="StatePicker_SelectedIndexChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Szczęśliwy</x:String>
+                        <x:String>Smutny</x:String>
+                        <x:String>Zły</x:String>
+                        <x:String>Neutralny</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Button Text="Otrzymaj poradę" Clicked="GetAdviceButton_Clicked" />
+            <Label Text="Twoja porada" x:Name="adviceLabel" />
+
+            <Label Text="Dziennik nastrojów:" />
+            <StackLayout x:Name="moodStackLayout" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
+
+Porady.xaml.cs
+using Microsoft.Maui.Controls;
+
+namespace pracawgrupach
+{
+    public partial class Porady : ContentPage
+    {
+        public enum UserState
+        {
+            Szczęśliwy,
+            Smutny,
+            Zły,
+            Neutralny
+        }
+
+        public Porady()
+        {
+            InitializeComponent();
+        }
+
+        private async void GetAdviceButton_Clicked(object sender, EventArgs e)
+        {
+            if (statePicker.SelectedItem != null)
+            {
+                var state = (UserState)Enum.Parse(typeof(UserState), statePicker.SelectedItem.ToString());
+                var advice = GetAdvice(state);
+                adviceLabel.Text = advice;
+                await DisplayAlert("Porada", advice, "OK");
+            }
+            else
+            {
+                await DisplayAlert("Błąd", "Proszę wybrać stan", "OK");
+            }
+        }
+
+        private string GetAdvice(UserState state)
+        {
+            switch (state)
+            {
+                case UserState.Szczęśliwy:
+                    return "Ciesz się życiem!";
+                case UserState.Smutny:
+                    return "Wszystko będzie dobrze!";
+                case UserState.Zły:
+                    return "Spokojnie, wszystko się ułoży!";
+                case UserState.Neutralny:
+                    return "Myśl pozytywnie!";
+                default:
+                    return "Brak porady";
+            }
+        }
+
+
+        private void StatePicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (statePicker.SelectedItem != null)
+            {
+                string selectedMood = statePicker.SelectedItem.ToString();
+                Label newMoodLabel = new Label { Text = "Nastrój: " + selectedMood };
+                moodStackLayout.Children.Add(newMoodLabel);
+            }
+        }
+    }
+}
+
+Relax.xaml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="pracawgrupach.Relax">
+    <StackLayout>
+        <Label Text="Ćwiczenia oddechowe" />
+        <Button Text="Rozpocznij ćwiczenie" Clicked="StartBreathingExerciseButton_Clicked" />
+        <Label Text="Techniki mindfulness" />
+        <Button Text="Rozpocznij techniki" Clicked="StartMindfulnessButton_Clicked" />
+    </StackLayout>
+</ContentPage>
+
+Relax.xaml.cs
+using Microsoft.Maui.Controls;
+
+namespace pracawgrupach
+{
+    public partial class Relax : ContentPage
+    {
+        public Relax()
+        {
+            InitializeComponent();
+        }
+
+        private async void StartBreathingExerciseButton_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Ćwiczenie oddechowe", "Wdychaj głęboko przez nos, a wydychaj przez usta", "OK");
+        }
+
+        private async void StartMindfulnessButton_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Techniki mindfulness", "Skoncentruj się na teraźniejszości i puść myśli", "OK");
+        }
+    }
+}
