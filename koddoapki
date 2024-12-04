@@ -1,26 +1,42 @@
 MainPage.xaml
 using Microsoft.Maui.Controls;
 
-namespace pracawgrupach
-{
-    public partial class Relax : ContentPage
-    {
-        public Relax()
-        {
-            InitializeComponent();
-        }
-
-        private async void StartBreathingExerciseButton_Clicked(object sender, EventArgs e)
-        {
-            await DisplayAlert("Ćwiczenie oddechowe", "Wdychaj głęboko przez nos, a wydychaj przez usta", "OK");
-        }
-
-        private async void StartMindfulnessButton_Clicked(object sender, EventArgs e)
-        {
-            await DisplayAlert("Techniki mindfulness", "Skoncentruj się na teraźniejszości i puść myśli", "OK");
-        }
-    }
-}
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="pracawgrupach.MainPage"
+             Title="Aplikacja Do Zarządzania Zdrowiem Psychicznym">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button 
+            Text="Relaksacja" 
+            Clicked="RelaxationButton_Clicked"
+            Grid.Row="0"
+            Grid.Column="0"
+            FontSize="Small"  
+            WidthRequest="500" 
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            HeightRequest="500"/>
+        
+        <Button 
+            Text="Rozwój osobisty" 
+            Clicked="PersonalGrowthButton_Clicked" 
+            Grid.Row="0"
+            Grid.Column="1"
+            FontSize="Small"  
+            WidthRequest="500"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            HeightRequest="500"/>
+    </Grid>
+</ContentPage>
 MainPage.xaml.cs
 
 using Microsoft.Maui.Controls;
